@@ -6,8 +6,9 @@ $primaryColor: #60a5fa;
 $activeBorder: #3b82f6;
 $grayText: #9ca3af;
 $danger: #dc2626;
-$danger: #f11515;
+$dangerDark: #f11515;
 $gray: #6b7280;
+$grayDark: #485d86;
 $font:
   -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
   Arial, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
@@ -41,7 +42,40 @@ body {
   font-weight: 600;
   border: none;
   cursor: pointer;
-  box-shadow: 0 1px 2px 0 rgb(0, 0, 0 / 0.05);
+  box-shadow: 0 1px 2px 0 rgba($color: #000000, $alpha: 0.05);
+}
+
+// footer
+.footer {
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  color: $white;
+  background-color: transparent;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    background-color: transparent;
+
+    button {
+      display: flex;
+      border: none;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      font-size: 15px;
+      background-color: transparent;
+      padding: 16px 0;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+    }
+  }
 }
 
 // home
@@ -116,5 +150,89 @@ body {
     @extend .button;
     padding: 0.5rem 1rem;
     background-color: $activeBorder;
+  }
+}
+
+// post
+.post {
+  padding-bottom: 40px;
+
+  &__flex {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  &__email,
+  &__createdAt {
+    font-size: 12px;
+    color: $grayText;
+  }
+
+  &__box {
+    padding: 10px;
+    border-bottom: 1px solid $border;
+
+    a {
+      text-decoration: none;
+    }
+
+    &-profile {
+      text-decoration: none;
+      padding: 0 10px;
+      &-img,
+      &-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+    }
+
+    &-content {
+      display: block;
+      font-weight: bold;
+      padding: 16px 4px;
+    }
+
+    &-footer {
+      display: flex;
+      gap: 8px;
+      flex-direction: row-reverse;
+      padding: 0 16px;
+      margin-top: 10px;
+      font-size: 14px;
+
+      button {
+        @extend .button;
+        &.post__delete {
+          background-color: $danger;
+
+          &:hover,
+          &:focus {
+            background-color: $dangerDark;
+          }
+        }
+        &.post__edit {
+          background-color: $gray;
+          a {
+            background-color: transparent;
+          }
+          &:hover,
+          &:focus {
+            background-color: $grayDark;
+          }
+        }
+        &.post__likes,
+        &.post__comments {
+          @extend .post__flex;
+
+          &:hover,
+          &:focus {
+            color: $gray;
+          }
+        }
+      }
+    }
   }
 }
