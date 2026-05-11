@@ -10,21 +10,32 @@ import NotificationsPage from "pages/notifications";
 import LoginPage from "pages/users/login";
 import SignupPage from "pages/users/signup";
 
-const Router = () => {
+interface RouterProps {
+  isAuthenticated: boolean;
+}
+
+const Router = ({ isAuthenticated }: RouterProps) => {
   return (
     <Routes>
-      <Route path={"/"} element={<HomePage />} />
-      <Route path={"/posts"} element={<PostsListPage />} />
-      <Route path={"/posts/:id"} element={<PostDetail />} />
-      <Route path={"/posts/new"} element={<PostNew />} />
-      <Route path={"/posts/edit/:id"} element={<ProfileEdit />} />
-      <Route path={"/profile"} element={<ProfilePage />} />
-      <Route path={"/profile/edit"} element={<ProfileEdit />} />
-      <Route path={"/notifications"} element={<NotificationsPage />} />
-      <Route path={"/search"} element={<SearchPage />} />
-      <Route path={"/users/login"} element={<LoginPage />} />
-      <Route path={"/users/Signup"} element={<SignupPage />} />
-      <Route path={"*"} element={<Navigate replace to="/" />} />
+      {isAuthenticated ? (
+        <>
+          <Route path={"/"} element={<HomePage />} />
+          <Route path={"/posts"} element={<PostsListPage />} />
+          <Route path={"/posts/:id"} element={<PostDetail />} />
+          <Route path={"/posts/new"} element={<PostNew />} />
+          <Route path={"/posts/edit/:id"} element={<ProfileEdit />} />
+          <Route path={"/profile"} element={<ProfilePage />} />
+          <Route path={"/profile/edit"} element={<ProfileEdit />} />
+          <Route path={"/notifications"} element={<NotificationsPage />} />
+          <Route path={"/search"} element={<SearchPage />} />
+        </>
+      ) : (
+        <>
+          <Route path={"/users/login"} element={<LoginPage />} />
+          <Route path={"/users/Signup"} element={<SignupPage />} />
+          <Route path={"*"} element={<Navigate replace to="/users/login" />} />
+        </>
+      )}
     </Routes>
   );
 };
